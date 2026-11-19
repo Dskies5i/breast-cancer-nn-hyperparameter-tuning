@@ -21,20 +21,27 @@ An experimental deep learning study evaluating **TensorBoard HParams Grid Search
   - `learning_rate`: `[0.001, 0.01]`
   - `dropout`: `[0.0, 0.3]`
   - `optimizer`: `['adam', 'sgd']`
-  -   - `batch_size`: `[16, 32]`
+  - `batch_size`: `[16, 32]`
   - `units`: `[16, 32]`
-- **Execution:** Exhaustive loop across all combinations (`2 x 2 x 2 x 2 x 2 = 32` runs) for `20` epochs per trial, logging scalar metrics and histograms to TensorBoard (`logs/hparam_tuning`).
+- **Execution:** Exhaustive loop across all combinations (`2 x 2 x 2 x 2 x 2 = 32` runs) for `20` epochs per trial, logging scalar metrics, batch-level progress, and histograms to TensorBoard (`logs/hparam_tuning`).
 
-![Grid Search Hyperparameters](assets/grid_search_hparam_grid.png)
-![Grid Search Epoch Loss](assets/grid_search_epoch_loss.png)
+#### Hyperparameter Overview & Epoch Trajectories
+| Hyperparameter Parallel Coordinates | Epoch Loss | Epoch Accuracy |
+| :---: | :---: | :---: |
+| ![Grid Search Hyperparameters](assets/grid_search_hparam_grid.png) | ![Grid Search Epoch Loss](assets/grid_search_epoch_loss.png) | ![Grid Search Epoch Accuracy](assets/grid_search_epoch_accuracy.png) |
+
+#### Mini-Batch Convergence Diagnostics
+| Batch Loss | Batch Accuracy |
+| :---: | :---: |
+| ![Grid Search Batch Loss](assets/grid_search_batch_loss.png) | ![Grid Search Batch Accuracy](assets/grid_search_batch_accuracy.png) |
 
 ### Part B: Automated Search with Keras Tuner (`RandomSearch`)
 - **Search Configuration:** `keras_tuner.RandomSearch` optimizing `val_accuracy` across `max_trials=10` (`20` epochs, `batch_size=32`), tuning `units` (`16` to `32`, step `16`), `dropout` (`0.0` to `0.3`), `learning_rate` (`[0.001, 0.01]`), and `optimizer` (`['adam', 'sgd']`) with TensorBoard logging.
-- 
 - **Best Trial Result:** Reached **`0.9912` validation accuracy** (`Trial 10` showed `0.9825` val accuracy), with top-performing configurations favoring **`units=32`**, **`learning_rate=0.01`**, and **`adam`**.
 
-![Keras Tuner Hyperparameters](assets/keras_tuner_hparam_grid.png)
-![Keras Tuner Epoch Accuracy](assets/keras_tuner_epoch_accuracy.png)
+| Hyperparameter Parallel Coordinates | Epoch Loss | Epoch Accuracy |
+| :---: | :---: | :---: |
+| ![Keras Tuner Hyperparameters](assets/keras_tuner_hparam_grid.png) | ![Keras Tuner Epoch Loss](assets/keras_tuner_epoch_loss.png) | ![Keras Tuner Epoch Accuracy](assets/keras_tuner_epoch_accuracy.png) |
 
 ---
 
@@ -49,6 +56,30 @@ An experimental deep learning study evaluating **TensorBoard HParams Grid Search
 
 ## Repository Contents
 
-- `notebooks/assg7_Optimization_with_tensorflow.ipynb` — Complete TensorBoard grid search and Keras Tuner experiments.
-- `assets/` — Exported TensorBoard parallel-coordinate and scalar curve screenshots.
+- `breast_cancer_opt_with_keras_tensorflow.ipynb` — Complete TensorBoard grid search and Keras Tuner experiments.
+- `assets/` — Exported TensorBoard parallel-coordinate, batch scalar, and epoch curve screenshots.
 - `requirements.txt` & `.gitignore` — Environment dependencies and ignore rules for TensorBoard logs/cache.
+
+---
+
+## REPO STRUCTURE
+```text
+breast-cancer-nn-hyperparameter-tuning/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── breast_cancer_opt_with_keras_tensorflow.ipynb
+└── assets/
+    ├── grid_search_hparam_grid.png
+    ├── grid_search_epoch_loss.png
+    ├── grid_search_epoch_accuracy.png
+    ├── grid_search_batch_loss.png
+    ├── grid_search_batch_accuracy.png
+    ├── keras_tuner_hparam_grid.png
+    ├── keras_tuner_epoch_loss.png
+    └── keras_tuner_epoch_accuracy.png
+```
+
+---
+
+
